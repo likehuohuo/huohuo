@@ -1,159 +1,132 @@
-<html lang="zh-CN"><head>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HuoMAX</title>
+    <title>壁纸站卡片</title>
     <style>
-        /* 全局样式重置 */
+        /* 全局样式重置，保证兼容性 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: "微软雅黑", sans-serif;
         }
 
-        /* 导航栏样式 */
-        header {
-            background-color: #333;
-            color: white;
-            padding: 1rem 5%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        /* 页面整体容器 */
+        body {
+            background-color: #f5f5f5;
         }
 
-        .nav-container {
+        /* 新增：标题栏样式 */
+        .header-bar {
+            height: 60px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            padding: 0 20px;
+            position: fixed; /* 固定在顶部 */
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999; /* 确保标题栏在最上层 */
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333333;
         }
 
-        nav ul {
+        /* 卡片容器，居中显示（调整top值适配标题栏） */
+        .card-container {
             display: flex;
-            list-style: none;
-            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            margin-top: 60px; /* 给标题栏留出空间 */
         }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #4CAF50;
-        }
-
-        /* 产品展示区样式 */
-        .product-section {
-            padding: 3rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: #333;
-        }
-
-        .product-grid {
-            display: grid;
-            /* 响应式布局：大屏3列，中屏2列，小屏1列 */
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .product-card {
-            border: 1px solid #eee;
-            border-radius: 8px;
+        /* 壁纸站卡片核心样式 */
+        .wallpaper-card {
+            width: 320px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s ease;
         }
 
-        .product-card:hover {
+        /* 卡片悬浮效果 */
+        .wallpaper-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        .product-img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover; /* 保持图片比例，填充容器 */
+        /* 卡片头部（可放壁纸封面图） */
+        .card-header {
+            height: 180px;
+            background-image: url("https://picsum.photos/320/180?category=wallpaper");
+            background-size: cover;
+            background-position: center;
         }
 
-        .product-info {
-            padding: 1.5rem;
+        /* 卡片内容区 */
+        .card-body {
+            padding: 20px;
         }
 
-        .product-name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: #333;
+        /* 卡片标题（壁纸站） */
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 8px;
         }
 
-        .product-desc {
-            color: #666;
-            margin-bottom: 1rem;
+        /* 卡片描述 */
+        .card-desc {
+            font-size: 14px;
+            color: #666666;
             line-height: 1.5;
+            margin-bottom: 16px;
         }
 
-        .product-price {
-            font-size: 1.1rem;
-            color: #4CAF50;
-            font-weight: bold;
+        /* 卡片按钮 */
+        .card-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #409eff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
         }
 
-        /* 页脚样式 */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-        }
-
-        /* 响应式适配：手机端优化 */
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            nav ul {
-                gap: 1rem;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
+        .card-btn:hover {
+            background-color: #337ecc;
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="nav-container">
-            <div class="logo">HuoMAX</div>
-            
-        </div>
-    </header>
-    <section class="product-section" id="products">
-        <h2 class="section-title">我们的服务</h2>
-        <div class="product-grid">
-            <!-- 产品1 -->
-            <div class="product-card">
-                <img src="1.JPG" alt="产品1" class="product-img">
-                <div class="product-info">
-                    <h3 class="product-name">态度</h3>
-                    <p class="product-desc">享受每一次服务用户</p>
-                    
-                </div>
+    <!-- 新增：标题栏 -->
+    <div class="header-bar">
+        <h1 class="header-title">高清壁纸资源站</h1>
+    </div>
+
+    <div class="card-container">
+        <!-- 唯一的壁纸站卡片 -->
+        <div class="wallpaper-card">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h3 class="card-title">壁纸站</h3>
+                <p class="card-desc">精选高清壁纸，覆盖风景、动漫、极简等多种风格，免费下载使用。</p>
+                <!-- 关键修改：添加 target="_blank" 实现新窗口打开，rel 属性提升安全性 -->
+                <a href="bizhi.html" class="card-btn" target="_blank" rel="noopener noreferrer">进入壁纸站</a>
             </div>
         </div>
-    </section>
-</body></html>
+    </div>
+</body>
+</html>
