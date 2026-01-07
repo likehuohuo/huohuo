@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechShow - 科技展示平台</title>
+    <title>软件下载 - 官方下载站</title>
     <!-- 引入Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入Font Awesome图标 -->
@@ -14,9 +14,9 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#165DFF', // 科技蓝主色
-                        secondary: '#0A1629', // 深色背景
-                        accent: '#36BFFA', // 高亮色
+                        primary: '#2563EB', // 主色调-蓝色
+                        success: '#10B981', // 下载按钮绿色
+                        neutral: '#1F2937', // 深色背景
                     },
                     fontFamily: {
                         sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -27,42 +27,38 @@
     </script>
     <style type="text/tailwindcss">
         @layer utilities {
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            .btn-hover {
+                transition: all 0.3s ease;
             }
-            .bg-gradient-tech {
-                background: linear-gradient(135deg, #165DFF 0%, #36BFFA 100%);
+            .btn-hover:hover {
+                transform: scale(1.05);
+                box-shadow: 0 8px 20px rgba(16, 185, 129, 0.25);
             }
             .card-hover {
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                transition: box-shadow 0.3s ease;
             }
             .card-hover:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 25px -5px rgba(22, 93, 255, 0.1);
+                box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.1);
             }
         }
     </style>
 </head>
 <body class="font-sans bg-gray-50 text-gray-800">
     <!-- 导航栏 -->
-    <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-sm shadow-sm transition-all duration-300">
+    <header class="bg-white shadow-sm sticky top-0 z-10">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
                     <a href="#" class="flex items-center">
-                        <i class="fa-solid fa-microchip text-primary text-2xl mr-2"></i>
-                        <span class="text-xl font-bold text-secondary">TechShow</span>
+                        <i class="fa-solid fa-download text-primary text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-neutral">软件下载站</span>
                     </a>
                 </div>
-                
-                <!-- 桌面端导航 -->
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#home" class="text-gray-700 hover:text-primary font-medium">首页</a>
-                    <a href="#features" class="text-gray-700 hover:text-primary font-medium">核心技术</a>
-                    <a href="#projects" class="text-gray-700 hover:text-primary font-medium">项目展示</a>
-                    <a href="#contact" class="text-gray-700 hover:text-primary font-medium">联系我们</a>
+                <nav class="hidden md:flex items-center space-x-4">
+                    <a href="#download" class="text-gray-700 hover:text-primary font-medium">立即下载</a>
+                    <a href="#info" class="text-gray-700 hover:text-primary font-medium">软件信息</a>
+                    <a href="#faq" class="text-gray-700 hover:text-primary font-medium">常见问题</a>
                 </nav>
-                
                 <!-- 移动端菜单按钮 -->
                 <div class="md:hidden">
                     <button id="menuBtn" class="text-gray-700 hover:text-primary">
@@ -75,222 +71,175 @@
         <!-- 移动端导航菜单 -->
         <div id="mobileMenu" class="md:hidden hidden bg-white border-t border-gray-200">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-primary/10 hover:text-primary">首页</a>
-                <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-primary/10 hover:text-primary">核心技术</a>
-                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-primary/10 hover:text-primary">项目展示</a>
-                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-primary/10 hover:text-primary">联系我们</a>
+                <a href="#download" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-primary/10 hover:text-primary">立即下载</a>
+                <a href="#info" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-primary/10 hover:text-primary">软件信息</a>
+                <a href="#faq" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-primary/10 hover:text-primary">常见问题</a>
             </div>
         </div>
     </header>
 
-    <!-- 英雄区 -->
-    <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24 bg-secondary text-white">
+    <!-- 核心下载区 -->
+    <section id="download" class="py-12 md:py-20 bg-gradient-to-r from-primary/5 to-primary/10">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-8 md:mb-0">
-                    <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-shadow mb-4">
-                        创新科技 <span class="text-accent">引领未来</span>
-                    </h1>
-                    <p class="text-lg text-gray-300 mb-8 max-w-lg">
-                        专注于前沿技术研发与落地，打造高性能、高可靠的科技解决方案，赋能企业数字化转型。
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#projects" class="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg transition-all">
-                            查看项目 <i class="fa-solid fa-arrow-right ml-2"></i>
-                        </a>
-                        <a href="#contact" class="bg-transparent border border-white/30 hover:bg-white/10 text-white font-medium px-6 py-3 rounded-lg transition-all">
-                            联系我们
-                        </a>
-                    </div>
-                </div>
-                <div class="md:w-1/2 flex justify-center">
-                    <img src="https://picsum.photos/id/180/600/400" alt="科技展示" class="rounded-lg shadow-2xl w-full max-w-md">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 核心技术区 -->
-    <section id="features" class="py-16 md:py-24">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">核心技术能力</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">我们掌握行业前沿技术，为各类场景提供定制化的技术解决方案</p>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- 技术卡片1 -->
-                <div class="bg-white rounded-xl shadow-md p-6 card-hover">
-                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-cloud text-primary text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">云计算</h3>
-                    <p class="text-gray-600">基于云原生架构的解决方案，提供弹性、高可用的云端服务</p>
-                </div>
-                
-                <!-- 技术卡片2 -->
-                <div class="bg-white rounded-xl shadow-md p-6 card-hover">
-                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-brain text-primary text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">人工智能</h3>
-                    <p class="text-gray-600">机器学习与深度学习应用开发，赋能业务智能化升级</p>
-                </div>
-                
-                <!-- 技术卡片3 -->
-                <div class="bg-white rounded-xl shadow-md p-6 card-hover">
-                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-database text-primary text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">大数据</h3>
-                    <p class="text-gray-600">数据采集、分析与可视化，挖掘数据价值驱动业务增长</p>
-                </div>
-                
-                <!-- 技术卡片4 -->
-                <div class="bg-white rounded-xl shadow-md p-6 card-hover">
-                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-shield-halved text-primary text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">网络安全</h3>
-                    <p class="text-gray-600">全方位的安全防护方案，保障数据与系统的安全可靠</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 项目展示区 -->
-    <section id="projects" class="py-16 md:py-24 bg-gray-100">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">精选项目展示</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">我们的成功案例，见证技术的力量</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 项目卡片1 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-                    <img src="https://picsum.photos/id/0/600/400" alt="智能数据分析平台" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">智能数据分析平台</h3>
-                        <p class="text-gray-600 mb-4">基于AI的企业级数据分析平台，支持实时数据处理与可视化展示</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-primary font-medium">人工智能 · 大数据</span>
-                            <a href="#" class="text-primary hover:text-primary/80 font-medium">
-                                查看详情 <i class="fa-solid fa-angle-right ml-1"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 项目卡片2 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-                    <img src="https://picsum.photos/id/160/600/400" alt="云原生应用架构" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">云原生应用架构</h3>
-                        <p class="text-gray-600 mb-4">微服务架构重构，提升系统可用性与扩展性，降低运维成本</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-primary font-medium">云计算 · 微服务</span>
-                            <a href="#" class="text-primary hover:text-primary/80 font-medium">
-                                查看详情 <i class="fa-solid fa-angle-right ml-1"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 项目卡片3 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-                    <img src="https://picsum.photos/id/119/600/400" alt="企业安全防护系统" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">企业安全防护系统</h3>
-                        <p class="text-gray-600 mb-4">全链路安全防护方案，涵盖身份认证、数据加密、入侵检测</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-primary font-medium">网络安全 · 数据加密</span>
-                            <a href="#" class="text-primary hover:text-primary/80 font-medium">
-                                查看详情 <i class="fa-solid fa-angle-right ml-1"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-10">
-                <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
-                    查看更多项目 <i class="fa-solid fa-chevron-right ml-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 联系我们 -->
-    <section id="contact" class="py-16 md:py-24">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-md overflow-hidden card-hover">
                 <div class="md:flex">
-                    <div class="md:w-1/2 bg-gradient-tech p-8 text-white">
-                        <h2 class="text-2xl font-bold mb-6">联系我们</h2>
-                        <p class="mb-8">有任何合作意向或技术咨询，欢迎随时联系我们</p>
-                        
-                        <div class="space-y-4">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center mr-4">
-                                    <i class="fa-solid fa-map-marker-alt"></i>
-                                </div>
-                                <span>北京市海淀区中关村科技园区</span>
+                    <!-- 软件图标/预览区 -->
+                    <div class="md:w-1/3 bg-neutral p-8 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="w-32 h-32 bg-primary/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                                <i class="fa-solid fa-window-maximize text-primary text-5xl"></i>
                             </div>
-                            
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center mr-4">
-                                    <i class="fa-solid fa-phone"></i>
-                                </div>
-                                <span>+86 10 1234 5678</span>
-                            </div>
-                            
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center mr-4">
-                                    <i class="fa-solid fa-envelope"></i>
-                                </div>
-                                <span>contact@techshow.com</span>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-8">
-                            <h3 class="font-medium mb-4">关注我们</h3>
-                            <div class="flex space-x-4">
-                                <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-all">
-                                    <i class="fa-brands fa-github"></i>
-                                </a>
-                                <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-all">
-                                    <i class="fa-brands fa-weixin"></i>
-                                </a>
-                                <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-all">
-                                    <i class="fa-brands fa-linkedin"></i>
-                                </a>
-                            </div>
+                            <h2 class="text-white text-xl font-bold">Windows 专用版</h2>
+                            <p class="text-gray-400 mt-2">v2.5.0 正式版</p>
                         </div>
                     </div>
                     
-                    <div class="md:w-1/2 p-8">
-                        <h3 class="text-xl font-semibold mb-6 text-secondary">发送消息</h3>
-                        <form>
-                            <div class="mb-4">
-                                <label for="name" class="block text-gray-700 mb-2 text-sm">姓名</label>
-                                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="请输入您的姓名">
+                    <!-- 下载信息区 -->
+                    <div class="md:w-2/3 p-8 md:p-10">
+                        <h1 class="text-2xl md:text-3xl font-bold text-neutral mb-4">全能工具包 Pro</h1>
+                        <p class="text-gray-600 mb-6">一款功能强大的Windows系统工具，轻量高效，无广告无捆绑，专为Windows 10/11优化。</p>
+                        
+                        <!-- 下载按钮 -->
+                        <a href="#" class="inline-flex items-center justify-center bg-success hover:bg-success/90 text-white font-bold px-8 py-4 rounded-lg btn-hover mb-6">
+                            <i class="fa-solid fa-download mr-2"></i>
+                            下载 Windows 版本
+                        </a>
+                        
+                        <!-- 下载信息 -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-gray-600">
+                            <div class="flex flex-col">
+                                <span class="text-gray-400">文件大小</span>
+                                <span class="font-medium">85.6 MB</span>
                             </div>
-                            
-                            <div class="mb-4">
-                                <label for="email" class="block text-gray-700 mb-2 text-sm">邮箱</label>
-                                <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="请输入您的邮箱">
+                            <div class="flex flex-col">
+                                <span class="text-gray-400">更新时间</span>
+                                <span class="font-medium">2026-01-07</span>
                             </div>
-                            
-                            <div class="mb-4">
-                                <label for="message" class="block text-gray-700 mb-2 text-sm">留言内容</label>
-                                <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="请输入您的留言内容"></textarea>
+                            <div class="flex flex-col">
+                                <span class="text-gray-400">系统要求</span>
+                                <span class="font-medium">Win 10/11</span>
                             </div>
-                            
-                            <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg transition-all">
-                                发送留言
-                            </button>
-                        </form>
+                            <div class="flex flex-col">
+                                <span class="text-gray-400">MD5校验</span>
+                                <span class="font-medium">8A7B6C9D8E</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 安全提示 -->
+                        <div class="mt-6 text-sm text-gray-500 bg-gray-50 p-4 rounded-lg">
+                            <i class="fa-solid fa-shield-halved text-primary mr-2"></i>
+                            官方正版 | 无捆绑 | 无广告 | 经过安全检测
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 软件详情区 -->
+    <section id="info" class="py-12 md:py-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl font-bold text-neutral mb-6 border-b pb-3">软件详细信息</h2>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 mb-8 card-hover">
+                    <h3 class="text-xl font-semibold mb-4 text-primary">功能特点</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check-circle text-success mt-1 mr-3"></i>
+                            <span>支持Windows 10/11全版本，无需安装，绿色便携</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check-circle text-success mt-1 mr-3"></i>
+                            <span>批量文件处理、系统优化、硬件检测一站式完成</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check-circle text-success mt-1 mr-3"></i>
+                            <span>定期自动更新，功能持续迭代优化</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check-circle text-success mt-1 mr-3"></i>
+                            <span>低资源占用，运行流畅不卡顿</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <h3 class="text-xl font-semibold mb-4 text-primary">系统要求</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
+                        <div>
+                            <h4 class="font-medium text-neutral mb-2">最低配置</h4>
+                            <ul class="space-y-2">
+                                <li>• Windows 10 64位</li>
+                                <li>• 4GB 内存</li>
+                                <li>• 100MB 可用磁盘空间</li>
+                                <li>• Intel i3 或同等处理器</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-neutral mb-2">推荐配置</h4>
+                            <ul class="space-y-2">
+                                <li>• Windows 11 64位</li>
+                                <li>• 8GB 及以上内存</li>
+                                <li>• 500MB 可用磁盘空间</li>
+                                <li>• Intel i5/Ryzen 5 或更高</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 常见问题 -->
+    <section id="faq" class="py-12 md:py-16 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl font-bold text-neutral mb-6 text-center">常见问题解答</h2>
+                
+                <div class="space-y-4">
+                    <!-- FAQ项1 -->
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left font-medium">
+                            <span>下载的文件无法打开怎么办？</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6 text-gray-600">
+                            <p>请检查是否下载完整（文件大小是否为85.6MB），并验证MD5值是否匹配。如果文件损坏，请重新下载。另外，请确保您的系统已安装最新的解压软件，推荐使用WinRAR或7-Zip解压。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ项2 -->
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left font-medium">
+                            <span>软件运行需要安装哪些运行库？</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6 text-gray-600">
+                            <p>软件需要Microsoft .NET Framework 4.8或更高版本，以及VC++ 2019运行库。如果您的系统缺少这些组件，软件会提示自动安装，也可以从微软官网下载安装。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ项3 -->
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left font-medium">
+                            <span>Windows 7系统可以使用吗？</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6 text-gray-600">
+                            <p>本版本仅支持Windows 10和Windows 11系统，不兼容Windows 7/8/8.1。如果您使用的是旧版Windows系统，建议升级系统或联系客服获取旧版本软件。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ项4 -->
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left font-medium">
+                            <span>软件是否需要激活？有使用期限吗？</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6 text-gray-600">
+                            <p>基础功能永久免费使用，高级功能提供30天试用，试用结束后如需继续使用高级功能，需要购买激活码。激活后无使用期限，可享受终身免费更新。</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -298,69 +247,14 @@
     </section>
 
     <!-- 页脚 -->
-    <footer class="bg-secondary text-white py-12">
+    <footer class="bg-neutral text-white py-8">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center mb-4">
-                        <i class="fa-solid fa-microchip text-primary text-2xl mr-2"></i>
-                        <span class="text-xl font-bold">TechShow</span>
-                    </div>
-                    <p class="text-gray-400 mb-4">创新科技，引领未来</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fa-brands fa-github"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fa-brands fa-twitter"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fa-brands fa-linkedin"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">快速链接</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#home" class="text-gray-400 hover:text-white">首页</a></li>
-                        <li><a href="#features" class="text-gray-400 hover:text-white">核心技术</a></li>
-                        <li><a href="#projects" class="text-gray-400 hover:text-white">项目展示</a></li>
-                        <li><a href="#contact" class="text-gray-400 hover:text-white">联系我们</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">服务范围</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">技术咨询</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">定制开发</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">系统集成</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">技术培训</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">联系方式</h4>
-                    <ul class="space-y-2">
-                        <li class="flex items-center text-gray-400">
-                            <i class="fa-solid fa-envelope mr-2"></i>
-                            contact@techshow.com
-                        </li>
-                        <li class="flex items-center text-gray-400">
-                            <i class="fa-solid fa-phone mr-2"></i>
-                            +86 10 1234 5678
-                        </li>
-                        <li class="flex items-center text-gray-400">
-                            <i class="fa-solid fa-map-marker-alt mr-2"></i>
-                            北京市海淀区中关村
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2026 TechShow. 保留所有权利。</p>
+            <div class="max-w-4xl mx-auto text-center">
+                <p class="mb-4">© 2026 软件下载站 版权所有</p>
+                <p class="text-sm text-gray-400">
+                    <i class="fa-solid fa-shield-halved mr-2"></i>
+                    本站提供的软件均为官方原版，未经授权请勿用于商业用途
+                </p>
             </div>
         </div>
     </footer>
@@ -375,18 +269,6 @@
             mobileMenu.classList.toggle('hidden');
         });
         
-        // 导航栏滚动效果
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.classList.add('shadow-md');
-                header.classList.remove('shadow-sm');
-            } else {
-                header.classList.remove('shadow-md');
-                header.classList.add('shadow-sm');
-            }
-        });
-        
         // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -397,8 +279,7 @@
                 
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    // 关闭移动端菜单
-                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.add('hidden'); // 关闭移动端菜单
                     
                     // 平滑滚动到目标位置
                     window.scrollTo({
@@ -409,11 +290,34 @@
             });
         });
         
-        // 表单提交处理
-        document.querySelector('form').addEventListener('submit', (e) => {
+        // FAQ折叠面板
+        const faqToggles = document.querySelectorAll('.faq-toggle');
+        faqToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('i');
+                
+                // 切换当前面板
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+                
+                // 关闭其他面板
+                faqToggles.forEach(otherToggle => {
+                    if (otherToggle !== toggle) {
+                        otherToggle.nextElementSibling.classList.add('hidden');
+                        otherToggle.querySelector('i').classList.remove('rotate-180');
+                    }
+                });
+            });
+        });
+        
+        // 下载按钮点击提示
+        const downloadBtn = document.querySelector('.btn-hover');
+        downloadBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            alert('留言发送成功！我们会尽快回复您。');
-            e.target.reset();
+            alert('开始下载全能工具包 Pro Windows 版本...\n\n如果下载未自动开始，请检查浏览器弹窗设置。');
+            // 实际使用时替换为真实下载链接
+            // window.location.href = '你的软件下载链接';
         });
     </script>
 </body>
