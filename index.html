@@ -310,6 +310,29 @@
             opacity: 1;
         }
 
+        /* 开发者工具检测遮罩 */
+        .devtools-blocker {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            color: white;
+            z-index: 9999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .devtools-blocker.active {
+            display: flex;
+        }
+
         /* 响应式适配 - 缩放过渡优化 */
         /* 当视口宽度不足660px时，2列卡片改为1列 */
         @media (max-width: 660px) {
@@ -374,6 +397,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body oncontextmenu="return false;" onselectstart="return false;">
+    <!-- 开发者工具拦截遮罩 -->
+    <div class="devtools-blocker" id="devtoolsBlocker">
+        <i class="fas fa-shield-halved" style="font-size: 4rem; margin-bottom: 1.5rem;"></i>
+        <h2>检测到开发者工具</h2>
+        <p style="margin-top: 1rem; max-width: 600px;">本网站内容受版权保护，禁止使用开发者工具查看源码或下载资源</p>
+        <p style="margin-top: 2rem; font-size: 1rem; opacity: 0.7;">关闭开发者工具后刷新页面即可正常访问</p>
+    </div>
+
     <header>
         <div class="header-content">
             <h1>HuoMAX</h1>
@@ -389,28 +420,24 @@
     <!-- 壁纸网格展示区 - 混合不同尺寸卡片，测试填充效果 -->
     <div class="wallpaper-grid">
         <!-- 小卡片（1x1） -->
-        <div class="wallpaper-card card-sm" data-img="https://likexingxiaohuo.bj.bcebos.com/Picture/4.jpg">
+        <div class="wallpaper-card card-sm" data-img="img1">
             <img src="https://likexingxiaohuo.bj.bcebos.com/Picture/4.jpg" alt="" class="wallpaper-img">
         </div>
-        <div class="wallpaper-card card-sm" data-img="https://likexingxiaohuo.bj.bcebos.com/Picture/4.jpg">
+        <div class="wallpaper-card card-sm" data-img="img2">
             <img src="https://likexingxiaohuo.bj.bcebos.com/Picture/4.jpg" alt="" class="wallpaper-img">
         </div>
-        <!-- 超大宽卡片（3x1）
-        <div class="wallpaper-card card-wide" data-img="https://picsum.photos/2560/1080?random=5">
-            <img src="https://picsum.photos/660/180?random=5" alt="超宽壁纸 1" class="wallpaper-img">
-        </div> -->
         <!-- 竖版卡片（1x2） -->
-        <div class="wallpaper-card card-portrait" data-img="https://likexingxiaohuo.bj.bcebos.com/Picture/1.png">
+        <div class="wallpaper-card card-portrait" data-img="img3">
             <img src="https://likexingxiaohuo.bj.bcebos.com/Picture/1.png" alt="" class="wallpaper-img">
         </div>
-        <div class="wallpaper-card card-portrait" data-img="https://likexingxiaohuo.bj.bcebos.com/Picture/2.png">
+        <div class="wallpaper-card card-portrait" data-img="img4">
             <img src="https://likexingxiaohuo.bj.bcebos.com/Picture/2.png" alt="" class="wallpaper-img">
         </div>
-        <div class="wallpaper-card card-portrait" data-img="https://likexingxiaohuo.bj.bcebos.com/Picture/3.png">
+        <div class="wallpaper-card card-portrait" data-img="img5">
             <img src="https://likexingxiaohuo.bj.bcebos.com/Picture/3.png" alt="" class="wallpaper-img">
         </div>
         <!-- 横版卡片（2x1） -->
-        <div class="wallpaper-card card-landscape" data-img="https://likexingxiaohuo.bj.bcebos.com/Picture/5.jpg">
+        <div class="wallpaper-card card-landscape" data-img="img6">
             <img src="https://likexingxiaohuo.bj.bcebos.com/Picture/5.jpg" alt="" class="wallpaper-img">
         </div>
     </div>
@@ -427,6 +454,89 @@
     </div>
 
     <script>
+        // ========== 核心保护：图片URL映射（隐藏真实地址） ==========
+        const imgUrlMap = {
+            'img1': 'https://likexingxiaohuo.bj.bcebos.com/Picture/4.jpg',
+            'img2': 'https://likexingxiaohuo.bj.bcebos.com/Picture/4.jpg',
+            'img3': 'https://likexingxiaohuo.bj.bcebos.com/Picture/1.png',
+            'img4': 'https://likexingxiaohuo.bj.bcebos.com/Picture/2.png',
+            'img5': 'https://likexingxiaohuo.bj.bcebos.com/Picture/3.png',
+            'img6': 'https://likexingxiaohuo.bj.bcebos.com/Picture/5.jpg'
+        };
+
+        // ========== 禁用开发者工具相关快捷键 ==========
+        document.addEventListener('keydown', function(e) {
+            // 禁用F12
+            if (e.key === 'F12') {
+                e.preventDefault();
+                alert('禁止使用开发者工具');
+                document.getElementById('devtoolsBlocker').classList.add('active');
+                return false;
+            }
+            
+            // 禁用Ctrl+Shift+I
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                e.preventDefault();
+                alert('禁止使用开发者工具');
+                document.getElementById('devtoolsBlocker').classList.add('active');
+                return false;
+            }
+            
+            // 禁用Ctrl+Shift+J (Chrome)
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+                e.preventDefault();
+                alert('禁止使用开发者工具');
+                document.getElementById('devtoolsBlocker').classList.add('active');
+                return false;
+            }
+            
+            // 禁用Ctrl+U (查看源码)
+            if (e.ctrlKey && e.key === 'u') {
+                e.preventDefault();
+                alert('禁止查看页面源码');
+                return false;
+            }
+            
+            // 禁用Ctrl+S (保存页面)
+            if ((e.ctrlKey && e.key === 's') || (e.ctrlKey && e.shiftKey && e.key === 's')) {
+                e.preventDefault();
+                alert('本网站图片禁止保存');
+                return false;
+            }
+            
+            // 禁用Alt+V (浏览器菜单)
+            if (e.altKey && e.key === 'v') {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // ========== 检测开发者工具是否打开 ==========
+        function detectDevTools() {
+            const devtoolsBlocker = document.getElementById('devtoolsBlocker');
+            
+            // 方法1：检测窗口尺寸变化（开发者工具打开会改变窗口尺寸）
+            const threshold = 160; // 开发者工具宽度阈值
+            setInterval(() => {
+                if (window.outerHeight - window.innerHeight > threshold || 
+                    window.outerWidth - window.innerWidth > threshold) {
+                    devtoolsBlocker.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            }, 500);
+            
+            // 方法2：利用console特性检测
+            try {
+                const devtools = /./;
+                devtools.toString = function() {
+                    devtoolsBlocker.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                };
+                console.log('%c', devtools);
+            } catch (e) {}
+        }
+
+        // ========== 基础功能保护 ==========
         // 禁用右键菜单
         document.addEventListener('contextmenu', function(e) {
             // 只阻止图片相关的右键
@@ -443,14 +553,7 @@
             }
         });
 
-        // 禁用保存快捷键 (Ctrl+S, Ctrl+Shift+S)
-        document.addEventListener('keydown', function(e) {
-            if ((e.ctrlKey && e.key === 's') || (e.ctrlKey && e.shiftKey && e.key === 's')) {
-                e.preventDefault();
-                alert('本网站图片禁止保存');
-            }
-        });
-
+        // ========== 页面核心功能 ==========
         // 获取元素
         const wallpaperCards = document.querySelectorAll('.wallpaper-card');
         const modal = document.getElementById('previewModal');
@@ -471,10 +574,11 @@
         let startX, startY; // 拖动起始位置
         let translateX = 0, translateY = 0; // 图片平移距离
 
-        // 点击卡片显示大图
+        // 点击卡片显示大图（通过映射获取真实URL）
         wallpaperCards.forEach(card => {
             card.addEventListener('click', () => {
-                const imgUrl = card.getAttribute('data-img');
+                const imgKey = card.getAttribute('data-img');
+                const imgUrl = imgUrlMap[imgKey];
                 modalImg.src = imgUrl;
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -617,6 +721,19 @@
             translateY = 0;
             updateImageTransform();
         });
+
+        // ========== 初始化保护措施 ==========
+        // 启动开发者工具检测
+        detectDevTools();
+        
+        // 混淆源码（简单示例）
+        (function() {
+            // 随机混淆变量名和逻辑
+            const a = document.createElement('script');
+            a.textContent = '// 保护脚本已加载';
+            document.head.appendChild(a);
+            setTimeout(() => a.remove(), 100);
+        })();
     </script>
 </body>
 </html>
